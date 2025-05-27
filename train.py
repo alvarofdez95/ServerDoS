@@ -40,7 +40,7 @@ for ep in range(num_episodes):
         # Acumular recompensas (como ejemplo)
         episode_reward += sum(rewards.values())
         done = dones["__all__"]
-    print(f"Episode {ep+1} final reward: {episode_reward:.2f}")
+    print(f"Episode {ep+1} final reward: {episode_reward:.2f}") # Note: episode_reward is sum of (num_defenders * team_defender_reward) + attacker_reward
     # Aquí el trainer ajustaría las políticas basándose en experiencias
 
 # (En un caso real, se guardaría el modelo entrenado)
