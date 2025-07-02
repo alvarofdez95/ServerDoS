@@ -142,12 +142,12 @@ class CyberSecurityEnv(gym.Env):
         # Espacio de acción del atacante:
         # Original actions: (subnet, host, protocolo, intensidad, frecuencia, spoof, evasion)
             # New Defender Actions
-            spaces.Discrete(self.N_PREDEFINED_RULES), # DeployAdvancedFirewallRule
-            spaces.Discrete(2),                       # DeployHoneynet (0: no change/off, 1: deploy/on)
-            spaces.Discrete(max_hosts_val + 1),       # IsolateCompromisedHost (0: no action, i > 0: isolate host i-1)
-            spaces.Discrete(2),                       # ShareThreatIntelligence (0: no, 1: yes)
-            spaces.Tuple((spaces.Discrete(max_hosts_val + 1), spaces.Discrete(self.N_VULNERABILITY_TYPES))) # PatchVulnerability (host_idx, vuln_type)
-        ))
+        #spaces.Discrete(self.N_PREDEFINED_RULES), # DeployAdvancedFirewallRule
+        #spaces.Discrete(2),                       # DeployHoneynet (0: no change/off, 1: deploy/on)
+        #spaces.Discrete(max_hosts_val + 1),       # IsolateCompromisedHost (0: no action, i > 0: isolate host i-1)
+        #spaces.Discrete(2),                       # ShareThreatIntelligence (0: no, 1: yes)
+        #spaces.Tuple((spaces.Discrete(max_hosts_val + 1), spaces.Discrete(self.N_VULNERABILITY_TYPES))) # PatchVulnerability (host_idx, vuln_type)
+        #))
         
         # Espacio de acción del atacante:
         # Original actions: (subnet, host, protocolo, intensidad, frecuencia, spoof, evasion)
@@ -497,14 +497,14 @@ class CyberSecurityEnv(gym.Env):
                     # Modelamos simplemente como si elimináramos una fracción
                     # Por simplificación, asumimos que filtrar elimina algo proporcional:
                     # por ejemplo, suponiendo que cada host contribuye igual, borramos 1/n partes
-                    parts = self.hosts_per_subnet[i]
-                    if parts > 0:
-                        drop_TCP = benign_TCP/parts + mal_TCP/parts
-                        drop_UDP = benign_UDP/parts + mal_UDP/parts
-                        drop_ICMP = benign_ICMP/parts + mal_ICMP/parts
-                    else:
-                        drop_TCP = drop_UDP = drop_ICMP = 0
-                    # Quitar del total y contar en filtrados
+                        parts = self.hosts_per_subnet[i]
+                        if parts > 0:
+                            drop_TCP = benign_TCP/parts + mal_TCP/parts
+                            drop_UDP = benign_UDP/parts + mal_UDP/parts
+                            drop_ICMP = benign_ICMP/parts + mal_ICMP/parts
+                        else:
+                            drop_TCP = drop_UDP = drop_ICMP = 0
+                        # Quitar del total y contar en filtrados
                         parts = self.hosts_per_subnet[i]
                         if parts > 0: # Avoid division by zero if somehow subnet has no hosts
                             drop_TCP = benign_TCP/parts + mal_TCP/parts
